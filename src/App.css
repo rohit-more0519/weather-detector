@@ -1,38 +1,253 @@
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
   min-height: 100vh;
+  width: 100vw;
+  position: relative;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  justify-content: flex-start;
+  padding-top: 60px;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  /* Animated gradient background */
+  background: linear-gradient(270deg, #89f7fe, #66a6ff, #fcb69f, #a1c4fd, #89f7fe);
+  background-size: 200% 200%;
+  animation: gradientMove 12s ease-in-out infinite;
+}
+
+/* Animated gradient keyframes */
+@keyframes gradientMove {
+  0% {background-position: 0% 50%;}
+  50% {background-position: 100% 50%;}
+  100% {background-position: 0% 50%;}
+}
+
+/* Floating bubbles for extra interactivity */
+.cloud {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0.7;
+  z-index: 0;
+  animation: cloudFloat linear infinite;
+}
+.cloud.c1 {
+  top: 12vh; left: -200px; width: 180px; height: 70px;
+  animation-duration: 38s;
+  animation-delay: 0s;
+}
+.cloud.c2 {
+  top: 32vh; left: -240px; width: 240px; height: 90px;
+  opacity: 0.6;
+  animation-duration: 60s;
+  animation-delay: 10s;
+}
+.cloud.c3 {
+  top: 58vh; left: -180px; width: 140px; height: 55px;
+  opacity: 0.5;
+  animation-duration: 45s;
+  animation-delay: 5s;
+}
+.cloud.c4 {
+  top: 75vh; left: -160px; width: 120px; height: 50px;
+  opacity: 0.52;
+  animation-duration: 55s;
+  animation-delay: 14s;
+}
+.cloud.c5 {
+  top: 20vh; left: -90px; width: 100px; height: 40px;
+  opacity: 0.4;
+  animation-duration: 32s;
+  animation-delay: 8s;
+}
+
+@keyframes cloudFloat {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(120vw); }
+}
+
+.cloud-part {
+  position: absolute;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 8px 32px #b3c6e733, 0 1.5px 4px #b3c6e799;
+}
+
+/* Individual cloud shapes */
+.cloud .cloud-part.p1 { left: 0; top: 20%; width: 60%; height: 60%; opacity: 0.95; }
+.cloud .cloud-part.p2 { left: 35%; top: 0; width: 50%; height: 50%; opacity: 0.85; }
+.cloud .cloud-part.p3 { left: 55%; top: 30%; width: 35%; height: 35%; opacity: 0.7; }
+.cloud .cloud-part.p4 { left: 15%; top: 45%; width: 40%; height: 40%; opacity: 0.7; }
+
+.weather-title {
+  font-size: 2.8rem;
+  font-weight: bold;
+  margin-bottom: 24px;
+  color: #1a237e;
+  letter-spacing: 2px;
+  text-shadow: 0 2px 10px #fff6;
+  animation: fadeIn 1s;
+}
+
+.weather-form {
+  margin: 20px 0;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.input-group {
+  position: relative;
+  display: flex;
+  width: 100%;
+}
+
+.button-group {
+  display: flex;
+  gap: 8px;
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: white;
+  padding-left: 8px;
+  border-radius: 0 25px 25px 0;
+}
+
+.weather-input {
+  padding: 12px 16px;
+  border-radius: 24px;
+  border: 1px solid #bdbdbd;
+  font-size: 1.1rem;
+  width: 220px;
+  outline: none;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+.weather-input:focus {
+  border: 1.5px solid #1976d2;
+  box-shadow: 0 2px 8px #1976d233;
+}
+
+.weather-btn {
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #64b5f6, #1976d2);
   color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  height: 40px;
+  display: flex;
+  align-items: center;
 }
 
-.App-link {
-  color: #61dafb;
+.weather-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.weather-btn:active {
+  transform: translateY(0);
+}
+
+.weather-btn:disabled {
+  background: #e0e0e0;
+  color: #9e9e9e;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.cancel-btn {
+  background: #f5f5f5 !important;
+  color: #757575 !important;
+  padding: 0 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.cancel-btn:hover {
+  background: #eeeeee !important;
+  color: #424242 !important;
+}
+
+.cancel-btn:active {
+  background: #e0e0e0 !important;
+}
+
+.weather-error {
+  color: #fff;
+  background: #e53935cc;
+  padding: 10px 24px;
+  border-radius: 16px;
+  margin-bottom: 18px;
+  font-size: 1.1rem;
+  animation: fadeIn 0.7s;
+  box-shadow: 0 2px 12px #e5393544;
+}
+
+.weather-card {
+  background: #fff;
+  border-radius: 28px;
+  box-shadow: 0 8px 32px #1976d233, 0 1.5px 4px #1976d299;
+  padding: 32px 28px 24px 28px;
+  min-width: 270px;
+  max-width: 350px;
+  margin: 0 auto;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: fadeIn 1s, popIn 0.7s cubic-bezier(.36,1.64,.6,1) 1;
+}
+
+.weather-icon {
+  width: 90px;
+  height: 90px;
+  margin-bottom: 12px;
+  filter: drop-shadow(0 0 10px #66a6ff99);
+  animation: floatIcon 2.5s infinite ease-in-out;
+}
+
+.weather-temp {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #1976d2;
+  margin-bottom: 6px;
+  text-shadow: 0 2px 8px #1976d244;
+}
+
+.weather-desc {
+  font-size: 1.15rem;
+  color: #555;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+  text-transform: capitalize;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes popIn {
+  0% { transform: scale(0.8); opacity: 0; }
+  70% { transform: scale(1.07); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes floatIcon {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-16px); }
+  100% { transform: translateY(0px); }
 }
