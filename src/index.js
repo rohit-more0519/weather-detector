@@ -1,5 +1,8 @@
+// COMPONENTS: Import React to use JSX and build components
 import React from 'react';
+// REACTDOM: Import ReactDOM to render React components to the real DOM
 import ReactDOM from 'react-dom/client';
+// REACT ROUTER: Import BrowserRouter to enable client-side routing
 import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import App from './App';
@@ -20,8 +23,10 @@ function loadGoogleMapsScript(callback) {
 }
 
 loadGoogleMapsScript(() => {
-  const root = ReactDOM.createRoot(document.getElementById('root'));
-  root.render(
+  // VIRTUAL DOM: ReactDOM creates a virtual DOM tree and syncs it with the real DOM efficiently
+const root = ReactDOM.createRoot(document.getElementById('root'));
+  // REACTDOM: Render the root React component (<App />) inside <BrowserRouter> for SPA navigation
+root.render(
     <React.StrictMode>
       <BrowserRouter>
         <App />

@@ -1,4 +1,6 @@
+// COMPONENTS: Importing React and hooks to build functional components
 import React, { useState, useRef, useEffect } from 'react';
+// REACT ROUTER: Importing routing components for SPA navigation
 import { Routes, Route } from 'react-router-dom';
 import './App.css';
 import Header from './Header';
@@ -12,14 +14,21 @@ import About from './About';
 const API_KEY = 'f00c38e0279b7bc85480c3fe775d518c';
 
 // App component demonstrates state, hooks, lifecycle, props, conditional rendering, and routing
+// COMPONENT: Main App function component
 function App() {
+    // STATE: Local state for loading indicator
   const [loading, setLoading] = useState(false);
+    // STATE: City input value
   const [city, setCity] = useState('');
+    // STATE: Weather data object
   const [weather, setWeather] = useState(null);
+    // STATE: Error message
   const [error, setError] = useState('');
+    // HOOK: useRef for direct DOM manipulation (input focus)
   const inputRef = useRef(null);
 
   // Google Places Autocomplete integration
+    // LIFECYCLE: useEffect runs after component mounts (like componentDidMount)
   useEffect(() => {
     if (!window.google || !window.google.maps || !window.google.maps.places) return;
     const autocomplete = new window.google.maps.places.Autocomplete(inputRef.current, {
@@ -83,8 +92,10 @@ function App() {
   };
 
   return (
-    <div className="App">
+      // JSX: UI structure using HTML-like syntax
+  <div className="App">
       {/* Header and navigation (demonstrates JSX, components, React Router) */}
+            {/* COMPONENT: Header for app title and navigation */}
       <Header />
 
       {/* Animated clouds for background (JSX demonstration) */}
@@ -95,14 +106,19 @@ function App() {
       ))}
 
       {/* React Router for page navigation */}
+            {/* REACT ROUTER: Define client-side routes for SPA navigation */}
       <Routes>
         <Route path="/" element={
           <main>
             {/* WeatherForm demonstrates props, state, and controlled components */}
+                        {/* PROPS: Passing data and callbacks from App to WeatherForm */}
             <WeatherForm city={city} setCity={setCity} fetchWeather={fetchWeather} inputRef={inputRef} />
             {/* Conditional rendering for loading, error, and weather */}
+                        {/* CONDITIONAL RENDERING: Show spinner when loading */}
             {loading && <Spinner />}
+                        {/* CONDITIONAL RENDERING: Show error message if error exists */}
             {error && <div className="weather-error">{error}</div>}
+                        {/* COMPONENT: WeatherDisplay shows weather info if available */}
             <WeatherDisplay weather={weather} />
           </main>
         } />
@@ -110,9 +126,11 @@ function App() {
       </Routes>
 
       {/* Footer component */}
+            {/* COMPONENT: Footer for copyright info */}
       <Footer />
     </div>
   );
 }
 
+// EXPORT: Make App available to other files
 export default App;
