@@ -1,18 +1,17 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import './App.css';
+import Header from './Header';
+import WeatherForm from './WeatherForm';
+import WeatherDisplay from './WeatherDisplay';
+import Spinner from './Spinner';
+import Footer from './Footer';
+import About from './About';
 
+// API key for weather fetching
 const API_KEY = 'f00c38e0279b7bc85480c3fe775d518c';
 
-// Spinner component
-function Spinner() {
-  return (
-    <div className="spinner-container">
-      <div className="spinner"></div>
-      <div style={{marginTop: '10px'}}>Fetching weather data...</div>
-    </div>
-  );
-}
-
+// App component demonstrates state, hooks, lifecycle, props, conditional rendering, and routing
 function App() {
   const [loading, setLoading] = useState(false);
   const [city, setCity] = useState('');
@@ -85,87 +84,33 @@ function App() {
 
   return (
     <div className="App">
-      {/* Animated clouds for background */}
-      <div className="cloud c1">
-        <div className="cloud-part p1"></div>
-        <div className="cloud-part p2"></div>
-        <div className="cloud-part p3"></div>
-        <div className="cloud-part p4"></div>
-      </div>
-      <div className="cloud c2">
-        <div className="cloud-part p1"></div>
-        <div className="cloud-part p2"></div>
-        <div className="cloud-part p3"></div>
-        <div className="cloud-part p4"></div>
-      </div>
-      <div className="cloud c3">
-        <div className="cloud-part p1"></div>
-        <div className="cloud-part p2"></div>
-        <div className="cloud-part p3"></div>
-        <div className="cloud-part p4"></div>
-      </div>
-      <div className="cloud c4">
-        <div className="cloud-part p1"></div>
-        <div className="cloud-part p2"></div>
-        <div className="cloud-part p3"></div>
-        <div className="cloud-part p4"></div>
-      </div>
-      <div className="cloud c5">
-        <div className="cloud-part p1"></div>
-        <div className="cloud-part p2"></div>
-        <div className="cloud-part p3"></div>
-        <div className="cloud-part p4"></div>
-      </div>
+      {/* Header and navigation (demonstrates JSX, components, React Router) */}
+      <Header />
 
-      <h1 className="weather-title">Weather Detector</h1>
-      <form className="weather-form" onSubmit={fetchWeather}>
-        <div className="input-group">
-          <input
-            ref={inputRef}
-            type="text"
-            placeholder="Enter city name..."
-            value={city}
-            onChange={e => setCity(e.target.value)}
-            onKeyDown={handleKeyDown}
-            className="weather-input"
-            autoComplete="off"
-            disabled={loading}
-          />
-          <div className="button-group">
-            {(city || weather) && !loading && (
-              <button 
-                type="button" 
-                className="weather-btn cancel-btn"
-                onClick={handleCancel}
-                aria-label="Clear search"
-              >
-                ✕
-              </button>
-            )}
-            <button 
-              type="submit" 
-              className="weather-btn" 
-              disabled={loading || !city.trim()}
-            >
-              {loading ? 'Searching...' : 'Get Weather'}
-            </button>
-          </div>
+      {/* Animated clouds for background (JSX demonstration) */}
+      {[1,2,3,4,5].map(n => (
+        <div className={`cloud c${n}`} key={n}>
+          {[1,2,3,4].map(p => <div className={`cloud-part p${p}`} key={p}></div>)}
         </div>
-      </form>
-      {loading && <Spinner />}
-      {error && <div className="weather-error">{error}</div>}
-      {weather && (
-        <div className="weather-card animate-pop">
-          <h2>{weather.city}, {weather.country}</h2>
-          <img
-            className="weather-icon"
-            src={`https://openweathermap.org/img/w/${weather.icon}.png`}
-            alt={weather.desc}
-          />
-          <div className="weather-temp">{Math.round(weather.temp)}°C</div>
-          <div className="weather-desc">{weather.desc.charAt(0).toUpperCase() + weather.desc.slice(1)}</div>
-        </div>
-      )}
+      ))}
+
+      {/* React Router for page navigation */}
+      <Routes>
+        <Route path="/" element={
+          <main>
+            {/* WeatherForm demonstrates props, state, and controlled components */}
+            <WeatherForm city={city} setCity={setCity} fetchWeather={fetchWeather} inputRef={inputRef} />
+            {/* Conditional rendering for loading, error, and weather */}
+            {loading && <Spinner />}
+            {error && <div className="weather-error">{error}</div>}
+            <WeatherDisplay weather={weather} />
+          </main>
+        } />
+        <Route path="/about" element={<About />} />
+      </Routes>
+
+      {/* Footer component */}
+      <Footer />
     </div>
   );
 }
